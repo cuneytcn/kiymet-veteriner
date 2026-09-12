@@ -6,7 +6,12 @@
       "Bash(git --version)",
       "Bash(bun --version)",
       "Bash(pnpm --version)",
-      "Bash(pnpm dlx *)"
+      "Bash(pnpm dlx *)",
+      "Bash(pnpm add *)",
+      "Bash(pnpm exec *)",
+      "Bash(cd *)",
+      "WebFetch(domain:www.prisma.io)",
+      "Bash(pnpm remove *)"
     ]
   }
 }

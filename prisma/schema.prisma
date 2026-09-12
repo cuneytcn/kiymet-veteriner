@@ -1,0 +1,282 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ---------------------------------------------------------------------------
+// Yönetim
+// ---------------------------------------------------------------------------
+
+enum Role {
+  ADMIN
+  EDITOR
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  role         Role     @default(EDITOR)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// ---------------------------------------------------------------------------
+// Randevu
+// ---------------------------------------------------------------------------
+
+enum AppointmentStatus {
+  PENDING
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+  NO_SHOW
+}
+
+enum PetType {
+  DOG
+  CAT
+  BIRD
+  RABBIT
+  HAMSTER
+  OTHER
+}
+
+model Appointment {
+  id        String            @id @default(cuid())
+  status    AppointmentStatus @default(PENDING)
+
+  // Sahip bilgileri
+  ownerName String
+  phone     String
+  email     String
+  address   String?
+
+  // Hayvan bilgileri
+  petName  String
+  petType  PetType
+  petBreed String?
+  petAge   String?
+
+  // Randevu
+  serviceId    String?
+  service      Service? @relation(fields: [serviceId], references: [id], onDelete: SetNull)
+  serviceLabel String // hizmet silinse bile talebin ne olduğu kaybolmasın
+  date         DateTime @db.Date
+  time         String // "14:30" — klinik yerel saati (Europe/Istanbul)
+  notes        String?
+
+  // İşletme notu (panelden, müşteriye gösterilmez)
+  adminNote String?
+
+  // Bildirim durumu
+  notifiedEmail    Boolean @default(false)
+  notifiedWhatsapp Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([date, time])
+  @@index([status, date])
+  @@index([createdAt])
+}
+
+/// Haftalık normal çalışma düzeni. dayOfWeek: 0=Pazar ... 6=Cumartesi
+model BusinessHour {
+  id        String  @id @default(cuid())
+  dayOfWeek Int     @unique
+  isClosed  Boolean @default(false)
+  openTime  String // "09:00"
+  closeTime String // "21:00"
+
+  /// Öğle arası gibi randevuya kapalı aralık (opsiyonel)
+  breakStart String?
+  breakEnd   String?
+
+  updatedAt DateTime @updatedAt
+}
+
+/// Tek seferlik kapanışlar: resmi tatil, izin, özel gün
+model Closure {
+  id     String   @id @default(cuid())
+  date   DateTime @unique @db.Date
+  reason String?
+
+  /// Gün tamamen kapalıysa true; false ise sadece saat aralığı daraltılır
+  allDay    Boolean @default(true)
+  openTime  String?
+  closeTime String?
+
+  createdAt DateTime @default(now())
+}
+
+// ---------------------------------------------------------------------------
+// İçerik (tamamı admin panelinden yönetilir)
+// ---------------------------------------------------------------------------
+
+model Service {
+  id               String  @id @default(cuid())
+  slug             String  @unique
+  title            String
+  shortDescription String
+  /// Kart ve başlıkta kullanılan lucide ikon adı (ör. "stethoscope")
+  icon             String?
+  coverImage       String?
+  /// Sayfa gövdesi — Markdown
+  content          String  @default("")
+  /// Hizmet sayfasında listelenen maddeler
+  highlights       String[] @default([])
+  order            Int     @default(0)
+  published        Boolean @default(true)
+
+  seoTitle       String?
+  seoDescription String?
+
+  appointments Appointment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([published, order])
+}
+
+model PriceCategory {
+  id    String @id @default(cuid())
+  title String
+  note  String?
+  order Int    @default(0)
+
+  items PriceItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PriceItem {
+  id         String        @id @default(cuid())
+  categoryId String
+  category   PriceCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  name String
+  /// Serbest metin: "1.500₺" veya "7.000₺ - 10.000₺" gibi aralıklar için
+  price String
+  note  String?
+  order Int    @default(0)
+
+  @@index([categoryId, order])
+}
+
+model TeamMember {
+  id       String  @id @default(cuid())
+  name     String
+  title    String
+  bio      String?
+  photo    String?
+  order    Int     @default(0)
+  published Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Faq {
+  id       String  @id @default(cuid())
+  question String
+  answer   String
+  /// Hangi sayfada gösterileceğini gruplamak için (ör. "randevu", "genel")
+  group    String  @default("genel")
+  order    Int     @default(0)
+  published Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([group, order])
+}
+
+model Post {
+  id         String    @id @default(cuid())
+  slug       String    @unique
+  title      String
+  excerpt    String
+  content    String    @default("")
+  coverImage String?
+  tags       String[]  @default([])
+  published  Boolean   @default(false)
+  publishedAt DateTime?
+
+  seoTitle       String?
+  seoDescription String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([published, publishedAt])
+}
+
+/// Hakkımızda, KVKK, gizlilik, kullanım şartları ve lokal SEO sayfaları
+model Page {
+  id      String  @id @default(cuid())
+  slug    String  @unique
+  title   String
+  /// Sayfa üstünde görünen tanıtım metni
+  intro   String?
+  content String  @default("")
+  published Boolean @default(true)
+  /// Sitemap'te öncelik ve navigasyonda görünürlük
+  showInNav Boolean @default(false)
+  navOrder  Int     @default(0)
+
+  seoTitle       String?
+  seoDescription String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+/// Tek satırlık ayar kaydı (id her zaman "singleton")
+model SiteSetting {
+  id String @id @default("singleton")
+
+  clinicName  String @default("Kıymet Veteriner Kliniği")
+  tagline     String @default("")
+  description String @default("")
+
+  phone          String @default("")
+  emergencyPhone String @default("")
+  email          String @default("")
+  addressLine    String @default("")
+  district       String @default("")
+  city           String @default("")
+  postalCode     String @default("")
+  latitude       Float?
+  longitude      Float?
+  mapsUrl        String @default("")
+
+  instagramUrl String @default("")
+  facebookUrl  String @default("")
+  youtubeUrl   String @default("")
+  tiktokUrl    String @default("")
+  xUrl         String @default("")
+  whatsappNumber String @default("")
+
+  /// Randevu slot süresi (dakika)
+  slotDurationMinutes Int @default(30)
+  /// Aynı slotta kabul edilen en fazla randevu sayısı
+  slotCapacity        Int @default(1)
+  /// Bugünden itibaren en erken kaç saat sonrasına randevu alınabilir
+  minLeadTimeHours    Int @default(2)
+  /// En fazla kaç gün ileriye randevu alınabilir
+  maxAdvanceDays      Int @default(60)
+
+  seoTitle       String @default("")
+  seoDescription String @default("")
+  /// Google Search Console doğrulama kodu
+  googleVerification String @default("")
+
+  updatedAt DateTime @updatedAt
+}
