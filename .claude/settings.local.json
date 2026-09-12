@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.kiymetveteriner.com)",
+      "Bash(npm -v)",
+      "Bash(git --version)",
+      "Bash(bun --version)",
+      "Bash(pnpm --version)",
+      "Bash(pnpm dlx *)"
+    ]
+  }
+}
