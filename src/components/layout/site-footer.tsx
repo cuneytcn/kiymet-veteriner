@@ -35,6 +35,7 @@ export async function SiteFooter() {
                 alt="Kıymet Veteriner Kliniği"
                 width={700}
                 height={234}
+                sizes="170px"
                 className="h-14 w-auto"
               />
             </Link>

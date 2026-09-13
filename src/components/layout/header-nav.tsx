@@ -92,6 +92,7 @@ export function HeaderNav({
             alt="Kıymet Veteriner Kliniği"
             width={600}
             height={201}
+            sizes="160px"
             priority
             className={cn(
               "w-auto transition-all duration-300",

@@ -99,6 +99,7 @@ export function AdminShell({
               alt="Kıymet Veteriner Kliniği"
               width={600}
               height={201}
+              sizes="120px"
               className="h-10 w-auto"
               priority
             />

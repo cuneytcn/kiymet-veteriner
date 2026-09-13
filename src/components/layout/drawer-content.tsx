@@ -24,6 +24,7 @@ export async function DrawerContent() {
           alt={settings.clinicName}
           width={600}
           height={201}
+          sizes="160px"
           className="h-13 w-auto"
         />
       </div>
