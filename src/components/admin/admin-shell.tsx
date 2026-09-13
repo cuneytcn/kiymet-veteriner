@@ -23,6 +23,7 @@ import {
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { logout } from "@/app/admin/(panel)/logout-action";
+import { NewAppointmentAlerts } from "@/components/admin/new-appointment-alerts";
 
 const navGroups = [
   {
@@ -136,6 +137,8 @@ export function AdminShell({
           </nav>
 
           <div className="mt-auto border-t border-line p-4">
+            <NewAppointmentAlerts />
+
             <Link
               href="/"
               target="_blank"
