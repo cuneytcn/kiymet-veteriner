@@ -92,6 +92,19 @@
     text-wrap: pretty;
   }
 
+  /* Tailwind v4 preflight'i butonları cursor: default yapıyor;
+     tıklanabilir öğelerde işaretçiyi geri getiriyoruz. */
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  summary {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  [aria-disabled="true"] {
+    cursor: not-allowed;
+  }
+
   :focus-visible {
     outline: 3px solid var(--color-brand);
     outline-offset: 3px;
