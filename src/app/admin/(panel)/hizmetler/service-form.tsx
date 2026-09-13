@@ -11,6 +11,7 @@ import { FormCard, FormFooter } from "@/components/admin/form-shell";
 import { ICON_NAMES, ServiceIcon } from "@/components/ui/icon";
 import { slugify } from "@/lib/slug";
 import { deleteService, saveService, type ServiceState } from "./actions";
+import { ImageField } from "@/components/admin/image-field";
 
 export function ServiceForm({ service }: { service: Service | null }) {
   const action = saveService.bind(null, service?.id ?? null);
@@ -108,19 +109,13 @@ export function ServiceForm({ service }: { service: Service | null }) {
           />
         </Field>
 
-        <Field
+        <ImageField
+          name="coverImage"
           label="Kapak görseli"
-          htmlFor="coverImage"
-          hint="Boş bırakırsanız varsayılan görsel kullanılır"
+          defaultValue={service?.coverImage}
+          hint="Boş bırakırsanız varsayılan görsel kullanılır."
           className="sm:col-span-2"
-        >
-          <Input
-            id="coverImage"
-            name="coverImage"
-            defaultValue={service?.coverImage ?? ""}
-            placeholder="/img/vet-kitten.webp"
-          />
-        </Field>
+        />
 
         <label className="flex cursor-pointer items-center gap-2.5 text-sm font-medium text-navy sm:col-span-2">
           <input

@@ -10,6 +10,7 @@ import { Field, Input, Textarea } from "@/components/ui/field";
 import { FormCard, FormFooter } from "@/components/admin/form-shell";
 import { slugify } from "@/lib/slug";
 import { deletePost, savePost, type PostState } from "./actions";
+import { ImageField } from "@/components/admin/image-field";
 
 export function PostForm({ post }: { post: Post | null }) {
   const action = savePost.bind(null, post?.id ?? null);
@@ -78,19 +79,12 @@ export function PostForm({ post }: { post: Post | null }) {
           />
         </Field>
 
-        <Field
+        <ImageField
+          name="coverImage"
           label="Kapak görseli"
-          htmlFor="coverImage"
-          hint="public/img klasöründeki bir görselin yolu"
+          defaultValue={post?.coverImage}
           className="sm:col-span-2"
-        >
-          <Input
-            id="coverImage"
-            name="coverImage"
-            defaultValue={post?.coverImage ?? ""}
-            placeholder="/img/cat-gray.webp"
-          />
-        </Field>
+        />
 
         <label className="flex cursor-pointer items-center gap-2.5 text-sm font-medium text-navy sm:col-span-2">
           <input

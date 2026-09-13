@@ -14,6 +14,7 @@ import {
   toggleMemberPublished,
   type TeamState,
 } from "./actions";
+import { ImageField } from "@/components/admin/image-field";
 
 export function TeamManager({ members }: { members: TeamMember[] }) {
   const [editing, setEditing] = useState<TeamMember | null>(null);
@@ -239,18 +240,11 @@ function MemberForm({
           />
         </Field>
 
-        <Field
-          label="Fotoğraf yolu"
-          htmlFor="photo"
-          hint="Görseli public/img klasörüne koyup yolunu yazın"
-        >
-          <Input
-            id="photo"
-            name="photo"
-            defaultValue={member?.photo ?? ""}
-            placeholder="/img/ekip-ayse.webp"
-          />
-        </Field>
+        <ImageField
+          name="photo"
+          label="Fotoğraf"
+          defaultValue={member?.photo}
+        />
 
         <Field label="Sıra" htmlFor="order" hint="Küçük sayı önce gösterilir">
           <Input
