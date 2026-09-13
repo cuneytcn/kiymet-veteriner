@@ -15,17 +15,30 @@ import {
   LogOut,
   Menu,
   Settings,
+  ShieldCheck,
   Stethoscope,
   Tag,
+  UserCog,
   Users,
   X,
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { logout } from "@/app/admin/(panel)/logout-action";
 import { NewAppointmentAlerts } from "@/components/admin/new-appointment-alerts";
 
-const navGroups = [
+type NavItem = {
+  href: string;
+  label: string;
+  icon: LucideIcon;
+  /** Yalnızca tam eşleşmede etkin sayılsın (ör. /admin kökü). */
+  exact?: boolean;
+  /** Editörlerden gizlenir. */
+  adminOnly?: boolean;
+};
+
+const navGroups: { label: string; items: NavItem[] }[] = [
   {
     label: "Genel",
     items: [
@@ -50,6 +63,13 @@ const navGroups = [
     items: [
       { href: "/admin/saatler", label: "Çalışma Saatleri", icon: Clock },
       { href: "/admin/ayarlar", label: "Site Ayarları", icon: Settings },
+      { href: "/admin/profil", label: "Hesabım", icon: UserCog },
+      {
+        href: "/admin/kullanicilar",
+        label: "Kullanıcılar",
+        icon: ShieldCheck,
+        adminOnly: true,
+      },
     ],
   },
 ];
@@ -115,7 +135,9 @@ export function AdminShell({
                   {group.label}
                 </p>
                 <ul className="grid gap-0.5">
-                  {group.items.map(({ href, label, icon: Icon, exact }) => (
+                  {group.items
+                    .filter((item) => !item.adminOnly || user.role === "ADMIN")
+                    .map(({ href, label, icon: Icon, exact }) => (
                     <li key={href}>
                       <Link
                         href={href}

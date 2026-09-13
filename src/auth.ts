@@ -77,3 +77,10 @@ export async function requireUser() {
     role: "ADMIN" | "EDITOR";
   };
 }
+
+/** Yalnızca yöneticilere açık ekranlar (kullanıcı yönetimi gibi). */
+export async function requireAdmin() {
+  const user = await requireUser();
+  if (!user || user.role !== "ADMIN") return null;
+  return user;
+}
