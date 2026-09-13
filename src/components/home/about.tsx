@@ -8,7 +8,7 @@ const points = [
   {
     icon: ShieldCheck,
     title: "Deneyimli veteriner hekim ekibi",
-    text: "Cerrahi, dahiliye ve acil vakalarda 15 yılı aşkın saha deneyimi.",
+    text: "Cerrahi, dahiliye ve acil vakalarda 10 yılı aşkın saha deneyimi.",
     tone: "bg-brand-soft text-brand",
   },
   {
@@ -51,7 +51,7 @@ export async function About() {
           {/* Deneyim rozeti */}
           <div className="absolute right-0 bottom-0 rounded-card bg-brand px-[1.625rem] py-5 text-center text-white shadow-lg">
             <span className="block font-head text-[2.5rem] leading-none font-bold">
-              15+
+              10+
             </span>
             <span className="mt-1 block text-[0.8125rem] opacity-95">
               yıllık deneyim

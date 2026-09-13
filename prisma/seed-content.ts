@@ -12,10 +12,10 @@ export const pages = [
     slug: "hakkimizda",
     title: "Bornova'nın veteriner kliniği",
     intro:
-      "15 yıldır aynı mahallede, aynı ekiple; dostunuzun sağlık geçmişi bizde kayıtlı kalıyor.",
+      "10 yıldır aynı mahallede, aynı ekiple; dostunuzun sağlık geçmişi bizde kayıtlı kalıyor.",
     seoTitle: "Hakkımızda | Kıymet Veteriner Kliniği Bornova",
     seoDescription:
-      "Bornova'da 15 yıldır hizmet veren Kıymet Veteriner Kliniği'nin ekibi, imkanları ve çalışma prensibi.",
+      "Bornova'da 10 yıldır hizmet veren Kıymet Veteriner Kliniği'nin ekibi, imkanları ve çalışma prensibi.",
     content: `Kıymet Veteriner Kliniği, İzmir Bornova'da kedi ve köpeklere yönelik koruyucu hekimlik, dahiliye, cerrahi ve acil hizmet veren bir veteriner kliniğidir.
 
 ## Nasıl çalışıyoruz

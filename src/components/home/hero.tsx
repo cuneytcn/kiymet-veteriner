@@ -120,7 +120,7 @@ export async function Hero() {
             </h1>
 
             <p className="mt-5 max-w-[33em] text-[1.0625rem] leading-[1.9] text-muted">
-              15 yıldır {settings.district}&apos;da kedi ve köpeklerin
+              10 yıldır {settings.district}&apos;da kedi ve köpeklerin
               yanındayız. Genel muayeneden ileri cerrahiye, aşıdan 7/24 acil
               müdahaleye kadar her şey tek çatı altında.
             </p>

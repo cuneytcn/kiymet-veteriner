@@ -24,7 +24,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 const stats = [
-  { value: "15+", label: "yıllık deneyim", color: "text-brand" },
+  { value: "10+", label: "yıllık deneyim", color: "text-brand" },
   { value: "5.000+", label: "mutlu hasta", color: "text-leaf" },
   { value: "7/24", label: "acil hizmet", color: "text-sun" },
   { value: "6", label: "uzmanlık alanı", color: "text-navy" },

@@ -9,7 +9,7 @@ import { db } from "./db";
 export const siteDefaults: SiteSetting = {
   id: "singleton",
   clinicName: "Kıymet Veteriner Kliniği",
-  tagline: "Bornova'da 15 yıldır dostlarınızın yanındayız",
+  tagline: "Bornova'da 10 yıldır dostlarınızın yanındayız",
   description:
     "İzmir Bornova'da genel muayene, aşı, cerrahi, laboratuvar ve 7/24 acil veteriner hizmetleri.",
 

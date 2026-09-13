@@ -25,7 +25,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title: page?.seoTitle ? { absolute: page.seoTitle } : "Hakkımızda",
     description:
       page?.seoDescription ||
-      `${s.district} ${s.clinicName} hakkında: ekibimiz, kliniğimiz ve 15 yıllık deneyimimiz.`,
+      `${s.district} ${s.clinicName} hakkında: ekibimiz, kliniğimiz ve 10 yıllık deneyimimiz.`,
     alternates: { canonical: "/hakkimizda" },
   };
 }
@@ -63,7 +63,7 @@ const values = [
   },
   {
     icon: Award,
-    title: "15 yıllık süreklilik",
+    title: "10 yıllık süreklilik",
     text: "Aynı mahallede, aynı ekiple; dostunuzun geçmişi bizde kayıtlı kalıyor.",
     tone: "bg-leaf-soft text-leaf-dark",
   },
@@ -88,7 +88,7 @@ export default async function AboutPage() {
         title={page?.title || `${settings.district}'nın veteriner kliniği`}
         description={
           page?.intro ||
-          `${settings.district}'da 15 yıldır kedi ve köpeklerin sağlığından sorumluyuz. Kliniğimizi tanıyın.`
+          `${settings.district}'da 10 yıldır kedi ve köpeklerin sağlığından sorumluyuz. Kliniğimizi tanıyın.`
         }
         crumbs={crumbs}
       />
@@ -143,7 +143,7 @@ export default async function AboutPage() {
 
             <dl className="mt-6 grid grid-cols-3 gap-3 text-center">
               {[
-                { v: "15+", l: "yıl" },
+                { v: "10+", l: "yıl" },
                 { v: "5.000+", l: "hasta" },
                 { v: "7/24", l: "acil" },
               ].map((s) => (
