@@ -8,6 +8,11 @@ import { useToast } from "@/components/ui/toast";
 const STORAGE_KEY = "admin:sesli-bildirim";
 const POLL_MS = 30_000;
 
+// Ding'in tepe ses seviyesi (0-1). İki nota üst üste bindiği için toplam
+// tepe bunun ~1.15 katına çıkıyor; 0.85'in üzerine çıkarmak kırpılmaya
+// (çatlama sesine) yol açar.
+const DING_VOLUME = 0.75;
+
 type NewAppointment = {
   id: string;
   ownerName: string;
@@ -82,7 +87,7 @@ function playDing(ctx: AudioContext) {
 
     // exponentialRamp sıfırı kabul etmez, çok küçük bir değerden başlıyoruz.
     gain.gain.setValueAtTime(0.0001, start + at);
-    gain.gain.exponentialRampToValueAtTime(0.3, start + at + 0.012);
+    gain.gain.exponentialRampToValueAtTime(DING_VOLUME, start + at + 0.012);
     gain.gain.exponentialRampToValueAtTime(0.0001, start + at + 0.45);
 
     oscillator.connect(gain).connect(ctx.destination);
