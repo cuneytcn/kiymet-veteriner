@@ -37,6 +37,10 @@ const settingsSchema = z.object({
   xUrl: optionalUrl,
   whatsappNumber: z.string().trim().max(30),
 
+  yearsOfExperience: z.coerce.number().int().min(1).max(100),
+  patientCount: z.string().trim().max(20),
+  specialtyCount: z.coerce.number().int().min(1).max(50),
+
   slotDurationMinutes: z.coerce.number().int().min(10).max(120),
   slotCapacity: z.coerce.number().int().min(1).max(10),
   minLeadTimeHours: z.coerce.number().int().min(0).max(72),

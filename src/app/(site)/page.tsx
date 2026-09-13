@@ -23,11 +23,16 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-const stats = [
-  { value: "10+", label: "yıllık deneyim", color: "text-brand" },
-  { value: "5.000+", label: "mutlu hasta", color: "text-leaf" },
+/** Sayılar panelden (Site Ayarları → İstatistikler) yönetilir. */
+const buildStats = (s: {
+  yearsOfExperience: number;
+  patientCount: string;
+  specialtyCount: number;
+}) => [
+  { value: `${s.yearsOfExperience}+`, label: "yıllık deneyim", color: "text-brand" },
+  { value: s.patientCount, label: "mutlu hasta", color: "text-leaf" },
   { value: "7/24", label: "acil hizmet", color: "text-sun" },
-  { value: "6", label: "uzmanlık alanı", color: "text-navy" },
+  { value: String(s.specialtyCount), label: "uzmanlık alanı", color: "text-navy" },
 ];
 
 export default async function HomePage() {
@@ -77,7 +82,7 @@ export default async function HomePage() {
       {/* Sayaçlar */}
       <Section className="py-15 md:py-15">
         <div className="container-page grid grid-cols-2 gap-8 text-center lg:grid-cols-4">
-          {stats.map((s) => (
+          {buildStats(settings).map((s) => (
             <div key={s.label} className="reveal">
               <span
                 className={`block font-head text-[2.25rem] leading-none font-bold md:text-5xl ${s.color}`}

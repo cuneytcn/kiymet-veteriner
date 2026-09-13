@@ -4,11 +4,11 @@ import { ButtonLink } from "@/components/ui/button";
 import { Eyebrow } from "@/components/ui/section";
 import { getSiteSettings } from "@/lib/site";
 
-const points = [
+const buildPoints = (years: number) => [
   {
     icon: ShieldCheck,
     title: "Deneyimli veteriner hekim ekibi",
-    text: "Cerrahi, dahiliye ve acil vakalarda 10 yılı aşkın saha deneyimi.",
+    text: `Cerrahi, dahiliye ve acil vakalarda ${years} yılı aşkın saha deneyimi.`,
     tone: "bg-brand-soft text-brand",
   },
   {
@@ -51,7 +51,7 @@ export async function About() {
           {/* Deneyim rozeti */}
           <div className="absolute right-0 bottom-0 rounded-card bg-brand px-[1.625rem] py-5 text-center text-white shadow-lg">
             <span className="block font-head text-[2.5rem] leading-none font-bold">
-              10+
+              {settings.yearsOfExperience}+
             </span>
             <span className="mt-1 block text-[0.8125rem] opacity-95">
               yıllık deneyim
@@ -75,7 +75,8 @@ export async function About() {
           </p>
 
           <ul className="mt-7 grid gap-[1.375rem]">
-            {points.map(({ icon: Icon, title, text, tone }) => (
+            {buildPoints(settings.yearsOfExperience).map(
+              ({ icon: Icon, title, text, tone }) => (
               <li key={title} className="flex gap-4">
                 <span
                   className={`grid size-[3.375rem] shrink-0 place-items-center rounded-full ${tone}`}

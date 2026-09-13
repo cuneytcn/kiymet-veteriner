@@ -25,12 +25,12 @@ export async function generateMetadata(): Promise<Metadata> {
     title: page?.seoTitle ? { absolute: page.seoTitle } : "Hakkımızda",
     description:
       page?.seoDescription ||
-      `${s.district} ${s.clinicName} hakkında: ekibimiz, kliniğimiz ve 10 yıllık deneyimimiz.`,
+      `${s.district} ${s.clinicName} hakkında: ekibimiz, kliniğimiz ve ${s.yearsOfExperience} yıllık deneyimimiz.`,
     alternates: { canonical: "/hakkimizda" },
   };
 }
 
-const values = [
+const buildValues = (years: number) => [
   {
     icon: Stethoscope,
     title: "Önce doğru teşhis",
@@ -63,7 +63,7 @@ const values = [
   },
   {
     icon: Award,
-    title: "10 yıllık süreklilik",
+    title: `${years} yıllık süreklilik`,
     text: "Aynı mahallede, aynı ekiple; dostunuzun geçmişi bizde kayıtlı kalıyor.",
     tone: "bg-leaf-soft text-leaf-dark",
   },
@@ -88,7 +88,7 @@ export default async function AboutPage() {
         title={page?.title || `${settings.district}'nın veteriner kliniği`}
         description={
           page?.intro ||
-          `${settings.district}'da 10 yıldır kedi ve köpeklerin sağlığından sorumluyuz. Kliniğimizi tanıyın.`
+          `${settings.district}'da ${settings.yearsOfExperience} yıldır kedi ve köpeklerin sağlığından sorumluyuz. Kliniğimizi tanıyın.`
         }
         crumbs={crumbs}
       />
@@ -143,8 +143,8 @@ export default async function AboutPage() {
 
             <dl className="mt-6 grid grid-cols-3 gap-3 text-center">
               {[
-                { v: "10+", l: "yıl" },
-                { v: "5.000+", l: "hasta" },
+                { v: `${settings.yearsOfExperience}+`, l: "yıl" },
+                { v: settings.patientCount, l: "hasta" },
                 { v: "7/24", l: "acil" },
               ].map((s) => (
                 <div key={s.l} className="rounded-card bg-cream px-3 py-4">
@@ -172,7 +172,8 @@ export default async function AboutPage() {
           />
 
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {values.map(({ icon: Icon, title, text, tone }) => (
+            {buildValues(settings.yearsOfExperience).map(
+              ({ icon: Icon, title, text, tone }) => (
               <div
                 key={title}
                 className="reveal rounded-card bg-white px-6 py-7 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-md"

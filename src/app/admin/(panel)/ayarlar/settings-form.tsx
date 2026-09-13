@@ -116,6 +116,42 @@ export function SettingsForm({ settings }: { settings: SiteSetting }) {
         </Field>
       </Card>
 
+      <Card title="İstatistikler">
+        <Field
+          label="Yıllık deneyim"
+          htmlFor="yearsOfExperience"
+          hint="Ana sayfa, hakkımızda ve tanıtım metinlerinde bu sayı kullanılır."
+        >
+          <Input
+            id="yearsOfExperience"
+            name="yearsOfExperience"
+            type="number"
+            min={1}
+            max={100}
+            defaultValue={s.yearsOfExperience}
+          />
+        </Field>
+
+        <Field
+          label="Mutlu hasta sayısı"
+          htmlFor="patientCount"
+          hint="Serbest metin: &quot;5.000+&quot; gibi yazabilirsiniz."
+        >
+          <Input id="patientCount" name="patientCount" defaultValue={s.patientCount} />
+        </Field>
+
+        <Field label="Uzmanlık alanı sayısı" htmlFor="specialtyCount">
+          <Input
+            id="specialtyCount"
+            name="specialtyCount"
+            type="number"
+            min={1}
+            max={50}
+            defaultValue={s.specialtyCount}
+          />
+        </Field>
+      </Card>
+
       <Card title="Randevu kuralları">
         <Field
           label="Randevu aralığı (dakika)"

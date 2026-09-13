@@ -36,6 +36,10 @@ export const siteDefaults: SiteSetting = {
   minLeadTimeHours: 2,
   maxAdvanceDays: 60,
 
+  yearsOfExperience: 10,
+  patientCount: "5.000+",
+  specialtyCount: 6,
+
   seoTitle: "Kıymet Veteriner Kliniği | Bornova İzmir Veteriner",
   seoDescription:
     "Bornova'da 7/24 acil veteriner hizmeti, genel muayene, aşı, cerrahi ve laboratuvar. Online randevu alın.",

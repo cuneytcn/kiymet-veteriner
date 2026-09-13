@@ -273,6 +273,12 @@ model SiteSetting {
   /// En fazla kaç gün ileriye randevu alınabilir
   maxAdvanceDays      Int @default(60)
 
+  /// Ana sayfa ve hakkımızda sayfasındaki sayılar. Metinlerin içine de
+  /// gömüldükleri için tek kaynaktan okunuyorlar.
+  yearsOfExperience Int    @default(10)
+  patientCount      String @default("5.000+")
+  specialtyCount    Int    @default(6)
+
   seoTitle       String @default("")
   seoDescription String @default("")
   /// Google Search Console doğrulama kodu
